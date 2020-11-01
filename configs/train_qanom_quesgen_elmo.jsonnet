@@ -1,5 +1,5 @@
 local QASRL_DATA_DIR = "data/qasrl-v2";
-local QANOM_DATA_DIR = "data/qanom_annotations";
+local QANOM_DATA_DIR = "../dataset";
 
 {
   "vocabulary": {

@@ -89,3 +89,12 @@ To evaluate on the densely labeled Dev set described in our paper, run the comma
 ```
 env CUDA_VISIBLE_DEVICES=1 python -m allennlp.run evaluate {$MODEL_DIRECTORY}/model.tar.gz --evaluation-data-file {$DATA_DIRECTORY}/dense/dev.jsonl.gz --cuda-device 0 --include-package nrl --overrides '{"dataset_reader": {"question_sources": "turk", "min_answers": 6, "min_valid_answers": 5}}'
 ```
+
+# QANom Parsing
+
+This branch (`qanom`) includes modifications and scripts for training and running the nrl-qasrl parser on deverbal nominalizations,
+as described in the paper *QANom: Question-Answer driven SRL for Nominalizations*.
+
+Check out the [QANom repository](https://github.com/kleinay/QANom) for further details, 
+and refer specifically to the [README](https://github.com/kleinay/QANom#qanom-baseline-parser) 
+for training and running `nrl-qasrl` parsers for QANom.

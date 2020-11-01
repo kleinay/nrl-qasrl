@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 @Predictor.register("qanom_parser")
 class QaNomParserPredictor(UnlabeledQaNomParserPredictor):
     def __init__(self, model: Model, dataset_reader: DatasetReader, prediction_threshold: float = None):
-        super().__init__(model, dataset_reader, prediction_threshold=prediction_threshold or 0.01)
+        super().__init__(model, dataset_reader, prediction_threshold=prediction_threshold or 0.3)
         # THIS ASSUMES THAT SENTENCES COME PRE-TOKENIZED!
         self.splitter = JustSpacesWordSplitter()
 
@@ -39,10 +39,16 @@ class QaNomParserPredictor(UnlabeledQaNomParserPredictor):
         result_dict: JsonDict = {"words": words, "verbs": json_dict['verb_forms']}
         instances: List[Instance] = [self._dataset_reader._make_instance_from_text(text, pred_idx)
                                      for pred_idx in predicate_indices]
-        if 'qasrl_id' in json_dict:
-            result_dict['qasrl_id'] = json_dict['qasrl_id']
+
+        try:
+            optional_sentence_id_field_names = {"qasrl_id", "sentence_id", "SentenceId"}
+            sentence_id_label = set.intersection(optional_sentence_id_field_names, json_dict).pop()
+        except KeyError:
+            sentence_id_label = None
+        if sentence_id_label:
+            result_dict[sentence_id_label] = json_dict[sentence_id_label]
             for instance in instances:
-                instance.add_field("qasrl_id", MetadataField(json_dict['qasrl_id']))
+                instance.add_field(sentence_id_label, MetadataField(json_dict[sentence_id_label]))
         return instances, result_dict, words, predicate_indices
 
     @overrides

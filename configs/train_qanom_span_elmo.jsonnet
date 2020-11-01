@@ -1,5 +1,5 @@
 local QASRL_DATA_DIR = "data/qasrl-v2";
-local QANOM_DATA_DIR = "data/qanom_annotations";
+local QANOM_DATA_DIR = "../dataset";
 
 {
   "vocabulary": {
@@ -18,9 +18,9 @@ local QANOM_DATA_DIR = "data/qanom_annotations";
           }
       }
  },
-  "train_data_path": QANOM_DATA_DIR + "/other/qasrl_and_qanom.train.csv",
-  "validation_data_path": QANOM_DATA_DIR + "/gold_set/final/annot.final.dev.csv",
-  "test_data_path": QANOM_DATA_DIR + "/gold_set/final/annot.final.test.csv",
+  "train_data_path": QANOM_DATA_DIR + "/train.csv",
+  "validation_data_path": QANOM_DATA_DIR + "/dev.csv",
+  "test_data_path": QANOM_DATA_DIR + "/test.csv",
   "model": {
     "type": "span_detector",
     "text_field_embedder": {
